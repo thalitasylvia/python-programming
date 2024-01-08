@@ -115,3 +115,56 @@ def independent_stacks():
 
     print(funny_stack.pop())
 # OUTPUT: 0
+
+
+
+def inheritance():
+    class Stack:
+        def __init__(self):
+            self.__stack_list = []
+
+        def push(self, val):
+            self.__stack_list.append(val)
+
+        def pop(self):
+            val = self.__stack_list[-1]
+            del self.__stack_list[-1]
+            return val
+
+
+    class AddingStack(Stack):
+        def __init__(self):
+            Stack.__init__(self) # access superclass
+            self.__sum = 0
+
+        def push(self, val):
+            self.__sum += val
+            Stack.push(self, val) # access superclass
+
+        def pop(self):
+            val = Stack.pop(self) # access superclass
+            self.__sum -= val
+            return val
+        
+        def get_sum(self):
+            return self.__sum
+
+    class AddingStack2(AddingStack):
+        pass # It gets all the components defined by its superclass 
+        
+    stack_object = AddingStack2()
+
+    for i in range(5):
+        stack_object.push(i)
+    print(stack_object.get_sum())
+
+    for i in range(5):
+        print(stack_object.pop())
+#  OUTPUT: 
+# 10
+# 4      
+# 3      
+# 2      
+# 1      
+# 0 
+        
